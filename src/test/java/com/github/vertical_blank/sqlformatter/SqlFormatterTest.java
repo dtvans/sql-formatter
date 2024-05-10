@@ -93,7 +93,25 @@ public class SqlFormatterTest {
         String format =
                 SqlFormatter.of(Dialect.MySql)
                         .format("-- test \nSELECT -- test \nid from where id = ${abc}", FormatConfig.builder().build());
-    assertEquals(
-            "-- test\nSELECT\n  -- test\n  id\nfrom\nwhere\n  id = ${abc}", format);
+        assertEquals(
+                "-- test\nSELECT\n  -- test\n  id\nfrom\nwhere\n  id = ${abc}", format);
+    }
+
+    @Test
+    public void withNoComments() {
+        String format =
+                SqlFormatter.of(Dialect.MySql)
+                        .format("-- test \nSELECT -- test \nid from where id = ${abc}", FormatConfig.builder().removeComments().build());
+        assertEquals(
+                "SELECT\n  id\nfrom\nwhere\n  id = ${abc}", format);
+    }
+
+    @Test
+    public void withOneLine() {
+        String format =
+                SqlFormatter.of(Dialect.MySql)
+                        .format("-- test \nSELECT -- test \nid from where id = ${abc}", FormatConfig.builder().oneLine().build());
+        assertEquals(
+                "SELECT id from where id = ${abc}", format);
     }
 }

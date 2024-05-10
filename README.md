@@ -17,6 +17,54 @@ This does not support:
 - Stored procedures.
 - Changing of the delimiter type to something else than ;.
 
+# Fork更改内容
+
+1. 支持格式化时移除注释
+
+```java
+String format =
+        SqlFormatter.of(Dialect.MySql)
+                .format("-- test \nSELECT -- test \nid from where id = ${abc}", FormatConfig.builder().removeComments().build());
+```
+
+```sql
+SELECT
+  id
+from
+where
+  id = ${abc}
+```
+
+2. 支持格式化成一行
+
+```java
+String format =
+        SqlFormatter.of(Dialect.MySql)
+                .format("-- test \nSELECT -- test \nid from where id = ${abc}", FormatConfig.builder().oneLine().build());
+```
+
+```sql
+SELECT id from where id = ${abc}
+```
+
+3. 支持格式化自定义占位符作为独立,占位符格式为 `${xxxx}`
+
+```java
+String format =
+        SqlFormatter.of(Dialect.MySql)
+                .format("-- test \nSELECT -- test \nid from where id = ${abc}", FormatConfig.builder().build());
+```
+输出
+```sql
+-- test
+SELECT
+  -- test
+  id
+from
+where
+  id = ${abc}
+```
+
 ## Usage
 
 ### Maven
