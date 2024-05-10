@@ -57,6 +57,9 @@ public class RegexUtil {
     return stringTypes.map(StringLiteral::get).join("|");
   }
 
+  public static String createRegex(JSLikeList<String> parens) {
+    return "(?i)^(" + parens.join("|") + ")";
+  }
   public static String createParenRegex(JSLikeList<String> parens) {
     return "(?i)^(" + parens.map(RegexUtil::escapeParen).join("|") + ")";
   }

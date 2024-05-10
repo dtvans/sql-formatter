@@ -97,6 +97,8 @@ public abstract class AbstractFormatter implements DialectConfigurator {
                 formattedQuery = this.formatOpeningParentheses(token, formattedQuery);
             } else if (token.type == TokenTypes.CLOSE_PAREN) {
                 formattedQuery = this.formatClosingParentheses(token, formattedQuery);
+            } else if (token.type == TokenTypes.INDEX_PLACEHOLDER) {
+                formattedQuery = this.formatIndexPlaceholder(token, formattedQuery);
             } else if (token.type == TokenTypes.PLACEHOLDER) {
                 formattedQuery = this.formatPlaceholder(token, formattedQuery);
             } else if (token.value.equals(",")) {
@@ -113,6 +115,9 @@ public abstract class AbstractFormatter implements DialectConfigurator {
         }
 
         return formattedQuery;
+    }
+    private String formatPlaceholder(Token token,String query) {
+        return query + this.show(token) + " ";
     }
 
     private String formatLineComment(Token token, String query) {
@@ -201,9 +206,11 @@ public abstract class AbstractFormatter implements DialectConfigurator {
         }
     }
 
-    private String formatPlaceholder(Token token, String query) {
+    private String formatIndexPlaceholder(Token token, String query) {
         return query + this.params.get(token) + " ";
     }
+
+
 
     // Commas start a new line (unless within inline parentheses or SQL "LIMIT" clause)
     private String formatComma(Token token, String query) {
