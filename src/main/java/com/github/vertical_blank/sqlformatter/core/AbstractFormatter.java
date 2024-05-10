@@ -58,9 +58,14 @@ public abstract class AbstractFormatter implements DialectConfigurator {
         this.tokens = this.tokenizer().tokenize(query);
         String formattedQuery = this.getFormattedQueryFromTokens().trim();
         if (cfg.oneLine) {
-            formattedQuery = formattedQuery.replaceAll("\r", " ").replaceAll("\n", " ");
+            if (!cfg.removeComments) {
+                formattedQuery = removeComment(formattedQuery);
+            }
+            formattedQuery = formattedQuery
+                    .replaceAll("[\r\n\t]", " ")
+                    .replaceAll("\\s+", " ");
         }
-        return formattedQuery;
+        return formattedQuery.trim();
     }
 
     private String getFormattedQueryFromTokens() {
