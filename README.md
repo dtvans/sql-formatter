@@ -24,7 +24,11 @@ This does not support:
 ```java
 String format =
         SqlFormatter.of(Dialect.MySql)
-                .format("-- test \nSELECT -- test \nid from where id = ${abc}", FormatConfig.builder().removeComments().build());
+                .format("-- test \nSELECT -- test \nid from where id = ${abc}", 
+                        FormatConfig
+                                .builder()
+                                .removeComments()
+                                .build());
 ```
 
 ```sql
@@ -40,7 +44,11 @@ where
 ```java
 String format =
         SqlFormatter.of(Dialect.MySql)
-                .format("-- test \nSELECT -- test \nid from where id = ${abc}", FormatConfig.builder().oneLine().build());
+                .format("-- test \nSELECT -- test \nid from where id = ${abc}", 
+                        FormatConfig
+                                .builder()
+                                .oneLine()
+                                .build());
 ```
 
 ```sql
@@ -52,7 +60,10 @@ SELECT id from where id = ${abc}
 ```java
 String format =
         SqlFormatter.of(Dialect.MySql)
-                .format("-- test \nSELECT -- test \nid from where id = ${abc}", FormatConfig.builder().build());
+                .format("-- test \nSELECT -- test \nid from where id = ${abc}", 
+                        FormatConfig
+                                .builder()
+                                .build());
 ```
 输出
 ```sql
